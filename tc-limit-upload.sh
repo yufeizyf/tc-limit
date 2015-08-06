@@ -46,8 +46,8 @@ if [ $# == 1 ];   then
 elif [ "$2" -gt 0 ] 2>/dev/null;   then
     start_tc $2mbps
 else
-    echo "invalid input"
-    display_help    
+    echo "Invalid input"
+    echo "You can input help for more information"    
 fi
 
 
