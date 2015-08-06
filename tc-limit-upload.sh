@@ -34,7 +34,7 @@ start_tc() {
 
 if [ $# == 1 ];   then
     echo $#
-    if [ "$1" == "help" ];  then
+    if [ "$1" == "-help" ];  then
         display_help
     elif [ "$1" == "stop" ];    then
         stop_tc
@@ -47,7 +47,7 @@ elif [ "$2" -gt 0 ] 2>/dev/null;   then
     start_tc $2mbps
 else
     echo "Invalid input"
-    echo "You can input help for more information"    
+    echo "You can input -help for more information"    
 fi
 
 
