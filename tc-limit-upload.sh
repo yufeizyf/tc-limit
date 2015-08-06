@@ -1,4 +1,4 @@
-#!/bin/bash
+#/bin/bash
 
 DEV=$(ip route show | head -1 | awk '{print $5}')
 
@@ -27,47 +27,28 @@ start_tc() {
 
 	/sbin/tc qdisc add dev $DEV root handle 1: htb
 
-	ss="/sbin/tc class add dev $DEV parent 1: classid 1:1  htb rate $1"
-	echo $ss
+	/sbin/tc class add dev $DEV parent 1: classid 1:1  htb rate $1
 
 	/sbin/tc filter add dev $DEV parent 1:0 protocol ip u32 match ip dst 0.0.0.0/0 flowid 1:1
 }
 
-if [ $#==1 ]
-then
-    if [ "$1" == "help" ] 
-    then
+if [ $# == 1 ];   then
+    echo $#
+    if [ "$1" == "help" ];  then
         display_help
-    elif [ "$1" == "stop" ] 
-    then
+    elif [ "$1" == "stop" ];    then
         stop_tc
-    elif [ "$1" == "status" ] 
-    then
+    elif [ "$1" == "status" ];  then
         show_status
-    elif [ "$1" == "start" ] 
-    then
+    elif [ "$1" == "start" ];   then
         start_tc 8mbps
     fi
-elif [ $#==2 ] 
-then
-	if[ $2=^[1-9][0-9]* ] then
-		#echo $2
-		start_tc $2mbps
-	else
-		echo "invalid input"
-		display_help
-	fi
-
-#if [ $# -lt 2 ] ; then
-#        echo "Parameter error"
-#        echo "devname, bandwidth(mbps)"
-#        echo "dev information as following:"
-#        echo $d
-#        echo "choose one dev, and set bandwidth"
-#        usage
-#        exit
-#fi
-
+elif [ "$2" -gt 0 ] 2>/dev/null;   then
+    start_tc $2mbps
+else
+    echo "invalid input"
+    display_help    
+fi
 
 
 # first, clear previous tc qdisc
