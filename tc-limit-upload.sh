@@ -29,9 +29,7 @@ start_tc() {
 
 	/sbin/tc class add dev $DEV parent 1: classid 1:1  htb rate $1
          
-        /sbin/tc class add dev $DEV parent 1:1 classid 1:10 htb rate $1 ceil $1
-        
-	/sbin/tc filter add dev $DEV parent 1:0 protocol ip u32 match ip dst 0.0.0.0/0 flowid 1:10
+	/sbin/tc filter add dev $DEV parent 1:0 protocol ip u32 match ip dst 0.0.0.0/0 flowid 1:1
 }
 
 if [ $# == 1 ];   then
